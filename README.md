@@ -1,3 +1,8 @@
+> [!IMPORTANT]
+> **Note**: This repo has recently been donated to the OPA GitHub organization
+> and we are in the process of integrating it into the OPA website. There may be
+> some references to the repo's previous location while we do that.
+
 # Rego Cheat Sheet
 
 This project contains the code to generate the
@@ -10,7 +15,7 @@ learning and using Rego.
 
 Rego is the declarative language used by
 [Open Policy Agent](https://www.openpolicyagent.org/), the general-purpose
-policy engine originally built by [Styra](https://www.styra.com/).
+policy engine.
 
 ## Development
 
@@ -24,8 +29,3 @@ Each top level dir is a section, each sub-dir is for a single 'cheat'.
 To render the outputs, after having made changes to the cheats,
 run `make build`.
 This requires `tectonic` to be installed (`brew install tectonic`).
-
-## Community
-
-For questions, discussions and announcements related to Styra products, services and open source projects, please join
-the Styra community on [Slack](https://inviter.co/styra)!
