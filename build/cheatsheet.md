@@ -22,8 +22,7 @@ In older documentation, these are sometimes referred to as "complete rules". ([T
 
 
 
-Input:
-```json
+```json title="input.json"
 {
   "user": {
     "role": "admin",
@@ -61,8 +60,7 @@ In older documentation these are sometimes referred to as "partial set rules". (
 
 
 
-Input:
-```json
+```json title="input.json"
 {
   "user": {
     "teams": [
@@ -71,7 +69,6 @@ Input:
     ]
   }
 }
-
 ```
 <RunSnippet id="input.Multi-Value+Set+Rules.json"/>
 
@@ -166,8 +163,7 @@ Check conditions on many elements. ([Try It](https://play.openpolicyagent.org/?s
 
 
 
-Input:
-```json
+```json title="input.json"
 {
   "userID": "u123",
   "paths": [
@@ -203,8 +199,7 @@ Statements in rules are joined with logical AND. ([Try It](https://play.openpoli
 
 
 
-Input:
-```json
+```json title="input.json"
 {
   "email": "joe@example.com"
 }
@@ -232,8 +227,7 @@ Express OR with multiple rules, functions or the in keyword. ([Try It](https://p
 
 
 
-Input:
-```json
+```json title="input.json"
 {
   "email": "opa@example.com",
   "name": "anna",

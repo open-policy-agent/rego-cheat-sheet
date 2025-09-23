@@ -180,7 +180,11 @@ func main() {
 		panic(err)
 	}
 
-	mdTemplate, err := template.New("md").Parse(string(mdTemplateBs))
+	mdTemplate, err := template.New("md").
+		Funcs(template.FuncMap{
+			"trim": strings.TrimSpace,
+		}).
+		Parse(string(mdTemplateBs))
 	if err != nil {
 		panic(err)
 	}
