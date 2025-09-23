@@ -1,6 +1,15 @@
+---
+sidebar_label: "Cheat Sheet"
+---
+
 # Rego Cheat Sheet
 
-<!-- The source of truth for this file's contents is https://github.com/StyraInc/rego-cheat-sheet -->
+<!-- The source of truth for this file's contents is https://github.com/open-policy-agent/rego-cheat-sheet -->
+
+:::tip
+**Did you know?** There's a [printable PDF](/cheatsheet.pdf) version of the
+cheatsheet too!
+:::
 
 All code examples on this page share this preamble:
 
@@ -8,17 +17,20 @@ All code examples on this page share this preamble:
 package cheat
 import rego.v1
 ```
+
 <RunSnippet id="preamble.rego"/>
+
 
 
 ## Rules - <sub><sup>The building blocks of Rego</sup></sub>
 
 
-### Single-Value Rules 
+
+### Single-Value Rules
 
 
 Single-value rules assign a single value. 
-In older documentation, these are sometimes referred to as "complete rules". ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie1xuICBcInVzZXJcIjoge1xuICAgIFwicm9sZVwiOiBcImFkbWluXCIsXG4gICAgXCJpbnRlcm5hbFwiOiB0cnVlXG4gIH1cbn0iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5kZWZhdWx0IGFsbG93IDo9IGZhbHNlXG5cbmFsbG93IGlmIHtcblx0aW5wdXQudXNlci5yb2xlID09IFwiYWRtaW5cIlxuXHRpbnB1dC51c2VyLmludGVybmFsXG59XG5cbmRlZmF1bHQgcmVxdWVzdF9xdW90YSA6PSAxMDBcblxucmVxdWVzdF9xdW90YSA6PSAxMDAwIGlmIGlucHV0LnVzZXIuaW50ZXJuYWxcblxucmVxdWVzdF9xdW90YSA6PSA1MCBpZiBpbnB1dC51c2VyLnBsYW4udHJpYWxcbiJ9))
+In older documentation, these are sometimes referred to as "complete rules". ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie1xuICBcInVzZXJcIjoge1xuICAgIFwicm9sZVwiOiBcImFkbWluXCIsXG4gICAgXCJpbnRlcm5hbFwiOiB0cnVlXG4gIH1cbn0iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5kZWZhdWx0IGFsbG93IDo9IGZhbHNlXG5cbmFsbG93IGlmIHtcblx0aW5wdXQudXNlci5yb2xlID09IFwiYWRtaW5cIlxuXHRpbnB1dC51c2VyLmludGVybmFsXG59XG5cbmRlZmF1bHQgcmVxdWVzdF9xdW90YSA6PSAxMDBcbnJlcXVlc3RfcXVvdGEgOj0gMTAwMCBpZiBpbnB1dC51c2VyLmludGVybmFsXG5yZXF1ZXN0X3F1b3RhIDo9IDUwIGlmIGlucHV0LnVzZXIucGxhbi50cmlhbFxuIn0%3D))
 
 
 
@@ -30,10 +42,11 @@ In older documentation, these are sometimes referred to as "complete rules". ([T
   }
 }
 ```
+
 <RunSnippet id="input.Single-Value+Rules.json"/>
 
 
-```rego
+```rego title="policy.rego"
 default allow := false
 
 allow if {
@@ -42,9 +55,7 @@ allow if {
 }
 
 default request_quota := 100
-
 request_quota := 1000 if input.user.internal
-
 request_quota := 50 if input.user.plan.trial
 ```
 
@@ -52,7 +63,8 @@ request_quota := 50 if input.user.plan.trial
 <RunSnippet command="data.cheat" files="#input.Single-Value+Rules.json" depends="preamble.rego"/>
 
 
-### Multi-Value Set Rules 
+
+### Multi-Value Set Rules
 
 
 Multi-value set rules generate and assign a set of values to a variable.
@@ -70,10 +82,11 @@ In older documentation these are sometimes referred to as "partial set rules". (
   }
 }
 ```
+
 <RunSnippet id="input.Multi-Value+Set+Rules.json"/>
 
 
-```rego
+```rego title="policy.rego"
 paths contains "/handbook/*"
 
 paths contains path if {
@@ -86,7 +99,8 @@ paths contains path if {
 <RunSnippet command="data.cheat" files="#input.Multi-Value+Set+Rules.json" depends="preamble.rego"/>
 
 
-### Multi-Value Object Rules 
+
+### Multi-Value Object Rules
 
 
 Multi-value object rules generate and assign a set of keys and values to a variable.
@@ -95,8 +109,7 @@ In older documentation these are sometimes referred to as "partial object rules"
 
 
 
-Input:
-```json
+```json title="input.json"
 {
   "paths": [
     "a/123.txt",
@@ -106,12 +119,12 @@ Input:
     "c/x.txt"
   ]
 }
-
 ```
+
 <RunSnippet id="input.Multi-Value+Object+Rules.json"/>
 
 
-```rego
+```rego title="policy.rego"
 # Creates an object with sets as the values.
 paths_by_prefix[prefix] contains path if {
 	some path in input.paths
@@ -125,10 +138,12 @@ paths_by_prefix[prefix] contains path if {
 
 
 
+
 ## Iteration - <sub><sup>Make quick work of collections</sup></sub>
 
 
-### Some 
+
+### Some
 
 
 Name local query variables. ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie30iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG5hbGxfcmVnaW9ucyA6PSB7XG5cdFwiZW1lYVwiOiB7XCJ3ZXN0XCIsIFwiZWFzdFwifSxcblx0XCJuYVwiOiB7XCJ3ZXN0XCIsIFwiZWFzdFwiLCBcImNlbnRyYWxcIn0sXG5cdFwibGF0YW1cIjoge1wid2VzdFwiLCBcImVhc3RcIn0sXG5cdFwiYXBhY1wiOiB7XCJub3J0aFwiLCBcInNvdXRoXCJ9LFxufVxuXG5hbGxvd2VkX3JlZ2lvbnMgY29udGFpbnMgcmVnaW9uX2lkIGlmIHtcblx0c29tZSBhcmVhLCByZWdpb25zIGluIGFsbF9yZWdpb25zXG5cblx0c29tZSByZWdpb24gaW4gcmVnaW9uc1xuXHRyZWdpb25faWQgOj0gc3ByaW50ZihcIiVzXyVzXCIsIFthcmVhLCByZWdpb25dKVxufVxuIn0%3D))
@@ -136,7 +151,7 @@ Name local query variables. ([Try It](https://play.openpolicyagent.org/?state=ey
 
 
 
-```rego
+```rego title="policy.rego"
 all_regions := {
 	"emea": {"west", "east"},
 	"na": {"west", "east", "central"},
@@ -156,7 +171,8 @@ allowed_regions contains region_id if {
 <RunSnippet command="data.cheat" depends="preamble.rego"/>
 
 
-### Every 
+
+### Every
 
 
 Check conditions on many elements. ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie1xuICBcInVzZXJJRFwiOiBcInUxMjNcIixcbiAgXCJwYXRoc1wiOiBbXG4gICAgXCIvZG9jcy91MTIzL25vdGVzLnR4dFwiLFxuICAgIFwiL2RvY3MvdTEyMy9xNC1yZXBvcnQuZG9jeFwiXG4gIF1cbn0iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG5hbGxvdyBpZiB7XG5cdHByZWZpeCA6PSBzcHJpbnRmKFwiL2RvY3MvJXMvXCIsIFtpbnB1dC51c2VySURdKVxuXHRldmVyeSBwYXRoIGluIGlucHV0LnBhdGhzIHtcblx0XHRzdGFydHN3aXRoKHBhdGgsIHByZWZpeClcblx0fVxufVxuIn0%3D))
@@ -172,10 +188,11 @@ Check conditions on many elements. ([Try It](https://play.openpolicyagent.org/?s
   ]
 }
 ```
+
 <RunSnippet id="input.Every.json"/>
 
 
-```rego
+```rego title="policy.rego"
 allow if {
 	prefix := sprintf("/docs/%s/", [input.userID])
 	every path in input.paths {
@@ -189,13 +206,15 @@ allow if {
 
 
 
+
 ## Control Flow - <sub><sup>Handle different conditions</sup></sub>
 
 
-### Logical AND 
+
+### Logical AND
 
 
-Statements in rules are joined with logical AND. ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie1xuICBcImVtYWlsXCI6IFwiam9lQGV4YW1wbGUuY29tXCJcbn0iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG52YWxpZF9zdGFmZl9lbWFpbCBpZiB7XG5cdHJlZ2V4Lm1hdGNoKGBeXFxTK0BcXFMrXFwuXFxTKyRgLCBpbnB1dC5lbWFpbClcblxuXHQjIGFuZFxuXHRlbmRzd2l0aChpbnB1dC5lbWFpbCwgXCJleGFtcGxlLmNvbVwiKVxufVxuIn0%3D))
+Statements in rules are joined with logical AND. ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie1xuICBcImVtYWlsXCI6IFwiam9lQGV4YW1wbGUuY29tXCJcbn0iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG52YWxpZF9zdGFmZl9lbWFpbCBpZiB7XG5cdHJlZ2V4Lm1hdGNoKGBeXFxTK0BcXFMrXFwuXFxTKyRgLCBpbnB1dC5lbWFpbCkgIyBhbmRcblx0ZW5kc3dpdGgoaW5wdXQuZW1haWwsIFwiZXhhbXBsZS5jb21cIilcbn1cbiJ9))
 
 
 
@@ -204,14 +223,13 @@ Statements in rules are joined with logical AND. ([Try It](https://play.openpoli
   "email": "joe@example.com"
 }
 ```
+
 <RunSnippet id="input.Logical+AND.json"/>
 
 
-```rego
+```rego title="policy.rego"
 valid_staff_email if {
-	regex.match(`^\S+@\S+\.\S+$`, input.email)
-
-	# and
+	regex.match(`^\S+@\S+\.\S+$`, input.email) # and
 	endswith(input.email, "example.com")
 }
 ```
@@ -220,10 +238,11 @@ valid_staff_email if {
 <RunSnippet command="data.cheat" files="#input.Logical+AND.json" depends="preamble.rego"/>
 
 
-### Logical OR 
+
+### Logical OR
 
 
-Express OR with multiple rules, functions or the in keyword. ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie1xuICBcImVtYWlsXCI6IFwib3BhQGV4YW1wbGUuY29tXCIsXG4gIFwibmFtZVwiOiBcImFubmFcIixcbiAgXCJtZXRob2RcIjogXCJHRVRcIlxufSIsInAiOiJwYWNrYWdlIGNoZWF0XG5cbmltcG9ydCByZWdvLnYxXG5cbiMgdXNpbmcgbXVsdGlwbGUgcnVsZXNcbnZhbGlkX2VtYWlsIGlmIGVuZHN3aXRoKGlucHV0LmVtYWlsLCBcIkBleGFtcGxlLmNvbVwiKVxuXG52YWxpZF9lbWFpbCBpZiBlbmRzd2l0aChpbnB1dC5lbWFpbCwgXCJAZXhhbXBsZS5vcmdcIilcblxudmFsaWRfZW1haWwgaWYgZW5kc3dpdGgoaW5wdXQuZW1haWwsIFwiQGV4YW1wbGUubmV0XCIpXG5cbiMgdXNpbmcgZnVuY3Rpb25zXG5hbGxvd2VkX2ZpcnN0bmFtZShuYW1lKSBpZiB7XG5cdHN0YXJ0c3dpdGgobmFtZSwgXCJhXCIpXG5cdGNvdW50KG5hbWUpIFx1MDAzZSAyXG59XG5cbmFsbG93ZWRfZmlyc3RuYW1lKFwiam9lXCIpICMgaWYgbmFtZSA9PSAnam9lJ1xuXG52YWxpZF9uYW1lIGlmIHtcblx0YWxsb3dlZF9maXJzdG5hbWUoaW5wdXQubmFtZSlcbn1cblxuIyB1c2luZyBgaW5gXG52YWxpZF9yZXF1ZXN0IGlmIHtcblx0aW5wdXQubWV0aG9kIGluIHtcIkdFVFwiLCBcIlBPU1RcIn1cbn1cbiJ9))
+Express OR with multiple rules, functions or the in keyword. ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie1xuICBcImVtYWlsXCI6IFwib3BhQGV4YW1wbGUuY29tXCIsXG4gIFwibmFtZVwiOiBcImFubmFcIixcbiAgXCJtZXRob2RcIjogXCJHRVRcIlxufSIsInAiOiJwYWNrYWdlIGNoZWF0XG5cbmltcG9ydCByZWdvLnYxXG5cbiMgdXNpbmcgbXVsdGlwbGUgcnVsZXNcbnZhbGlkX2VtYWlsIGlmIGVuZHN3aXRoKGlucHV0LmVtYWlsLCBcIkBleGFtcGxlLmNvbVwiKVxudmFsaWRfZW1haWwgaWYgZW5kc3dpdGgoaW5wdXQuZW1haWwsIFwiQGV4YW1wbGUub3JnXCIpXG52YWxpZF9lbWFpbCBpZiBlbmRzd2l0aChpbnB1dC5lbWFpbCwgXCJAZXhhbXBsZS5uZXRcIilcblxuIyB1c2luZyBmdW5jdGlvbnNcbmFsbG93ZWRfZmlyc3RuYW1lKG5hbWUpIGlmIHtcblx0c3RhcnRzd2l0aChuYW1lLCBcImFcIilcblx0Y291bnQobmFtZSkgXHUwMDNlIDJcbn1cblxuYWxsb3dlZF9maXJzdG5hbWUoXCJqb2VcIikgIyBpZiBuYW1lID09ICdqb2UnXG5cbnZhbGlkX25hbWUgaWYgYWxsb3dlZF9maXJzdG5hbWUoaW5wdXQubmFtZSlcblxudmFsaWRfcmVxdWVzdCBpZiB7XG5cdGlucHV0Lm1ldGhvZCBpbiB7XCJHRVRcIiwgXCJQT1NUXCJ9ICMgdXNpbmcgYGluYFxufVxuIn0%3D))
 
 
 
@@ -234,15 +253,14 @@ Express OR with multiple rules, functions or the in keyword. ([Try It](https://p
   "method": "GET"
 }
 ```
+
 <RunSnippet id="input.Logical+OR.json"/>
 
 
-```rego
+```rego title="policy.rego"
 # using multiple rules
 valid_email if endswith(input.email, "@example.com")
-
 valid_email if endswith(input.email, "@example.org")
-
 valid_email if endswith(input.email, "@example.net")
 
 # using functions
@@ -253,13 +271,10 @@ allowed_firstname(name) if {
 
 allowed_firstname("joe") # if name == 'joe'
 
-valid_name if {
-	allowed_firstname(input.name)
-}
+valid_name if allowed_firstname(input.name)
 
-# using `in`
 valid_request if {
-	input.method in {"GET", "POST"}
+	input.method in {"GET", "POST"} # using `in`
 }
 ```
 
@@ -268,10 +283,12 @@ valid_request if {
 
 
 
+
 ## Testing - <sub><sup>Validate your policy's behavior</sup></sub>
 
 
-### With 
+
+### With
 
 
 Override input and data using the with keyword. ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie30iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG5hbGxvdyBpZiBpbnB1dC5hZG1pbiA9PSB0cnVlXG5cbnRlc3RfYWxsb3dfd2hlbl9hZG1pbiBpZiB7XG5cdGFsbG93IHdpdGggaW5wdXQgYXMge1wiYWRtaW5cIjogdHJ1ZX1cbn1cbiJ9))
@@ -279,7 +296,7 @@ Override input and data using the with keyword. ([Try It](https://play.openpolic
 
 
 
-```rego
+```rego title="policy.rego"
 allow if input.admin == true
 
 test_allow_when_admin if {
@@ -292,19 +309,21 @@ test_allow_when_admin if {
 
 
 
+
 ## Debugging - <sub><sup>Find and fix problems</sup></sub>
 
 
-### Print 
+
+### Print
 
 
-Use print in rules to inspect values at runtime. ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie30iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG5hbGxvd2VkX3VzZXJzIDo9IHtcImFsaWNlXCIsIFwiYm9iXCIsIFwiY2hhcmxpZVwifVxuXG5hbGxvdyBpZiB7XG5cdHNvbWUgdXNlciBpbiBhbGxvd2VkX3VzZXJzXG5cdHByaW50KHVzZXIpXG5cdGlucHV0LnVzZXIgPT0gdXNlclxufVxuIn0%3D))
+Use print in rules to inspect values at runtime. ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie30iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG5hbGxvd2VkX3VzZXJzIDo9IHtcImFsaWNlXCIsIFwiYm9iXCJ9XG5cbmFsbG93IGlmIHtcblx0c29tZSB1c2VyIGluIGFsbG93ZWRfdXNlcnNcblx0cHJpbnQodXNlcilcblx0aW5wdXQudXNlciA9PSB1c2VyXG59XG4ifQ%3D%3D))
 
 
 
 
-```rego
-allowed_users := {"alice", "bob", "charlie"}
+```rego title="policy.rego"
+allowed_users := {"alice", "bob"}
 
 allow if {
 	some user in allowed_users
@@ -318,10 +337,12 @@ allow if {
 
 
 
+
 ## Comprehensions - <sub><sup>Rework and process collections</sup></sub>
 
 
-### Arrays 
+
+### Arrays
 
 
 Produce ordered collections, maintaining duplicates.
@@ -330,7 +351,7 @@ Produce ordered collections, maintaining duplicates.
 
 
 
-```rego
+```rego title="policy.rego"
 doubled := [m |
 	some n in [1, 2, 3, 3]
 	m := n * 2
@@ -341,7 +362,8 @@ doubled := [m |
 <RunSnippet command="data.cheat" depends="preamble.rego"/>
 
 
-### Sets 
+
+### Sets
 
 
 Produce unordered collections without duplicates.
@@ -350,7 +372,7 @@ Produce unordered collections without duplicates.
 
 
 
-```rego
+```rego title="policy.rego"
 unique_doubled contains m if {
 	some n in [10, 20, 30, 20, 10]
 	m := n * 2
@@ -361,7 +383,8 @@ unique_doubled contains m if {
 <RunSnippet command="data.cheat" depends="preamble.rego"/>
 
 
-### Objects 
+
+### Objects
 
 
 Produce key:value data. Note, keys must be unique.
@@ -370,7 +393,7 @@ Produce key:value data. Note, keys must be unique.
 
 
 
-```rego
+```rego title="policy.rego"
 is_even[number] := is_even if {
 	some number in [1, 2, 3, 4]
 	is_even := (number % 2) == 0
@@ -382,10 +405,12 @@ is_even[number] := is_even if {
 
 
 
+
 ## Builtins - <sub><sup>Handy functions for common tasks</sup></sub>
 
 
-### Regex 
+
+### Regex
 
 
 Pattern match and replace string data. ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie30iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG5leGFtcGxlX3N0cmluZyA6PSBcIkJ1aWxkIFBvbGljeSBhcyBDb2RlIHdpdGggT1BBIVwiXG5cbmNoZWNrX21hdGNoIGlmIHJlZ2V4Lm1hdGNoKGBcXHcrYCwgZXhhbXBsZV9zdHJpbmcpXG5cbmNoZWNrX3JlcGxhY2UgOj0gcmVnZXgucmVwbGFjZShleGFtcGxlX3N0cmluZywgYFxccytgLCBcIl9cIilcbiJ9))
@@ -393,7 +418,7 @@ Pattern match and replace string data. ([Try It](https://play.openpolicyagent.or
 
 
 
-```rego
+```rego title="policy.rego"
 example_string := "Build Policy as Code with OPA!"
 
 check_match if regex.match(`\w+`, example_string)
@@ -405,21 +430,22 @@ check_replace := regex.replace(example_string, `\s+`, "_")
 <RunSnippet command="data.cheat" depends="preamble.rego"/>
 
 
-### Strings 
+
+### Strings
 
 
-Check and transform strings. ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie30iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG5leGFtcGxlX3N0cmluZyA6PSBcIkJ1aWxkIFBvbGljeSBhcyBDb2RlIHdpdGggT1BBIVwiXG5cbmNoZWNrX2NvbnRhaW5zIGlmIGNvbnRhaW5zKGV4YW1wbGVfc3RyaW5nLCBcIk9QQVwiKVxuY2hlY2tfc3RhcnRzd2l0aCBpZiBzdGFydHN3aXRoKGV4YW1wbGVfc3RyaW5nLCBcIkJ1aWxkXCIpXG5jaGVja19lbmRzd2l0aCBpZiBlbmRzd2l0aChleGFtcGxlX3N0cmluZywgXCIhXCIpXG5jaGVja19yZXBsYWNlIDo9IHJlcGxhY2UoZXhhbXBsZV9zdHJpbmcsIFwiT1BBXCIsIFwiU3R5cmFcIilcbmNoZWNrX3NwcmludGYgOj0gc3ByaW50ZihcIk9QQSBpcyAlcyFcIiwgW1wiYXdlc29tZVwiXSlcbiJ9))
+Check and transform strings. ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie30iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG5leGFtcGxlX3N0cmluZyA6PSBcIkJ1aWxkIFBvbGljeSBhcyBDb2RlIHdpdGggT1BBIVwiXG5cbmNoZWNrX2NvbnRhaW5zIGlmIGNvbnRhaW5zKGV4YW1wbGVfc3RyaW5nLCBcIk9QQVwiKVxuY2hlY2tfc3RhcnRzd2l0aCBpZiBzdGFydHN3aXRoKGV4YW1wbGVfc3RyaW5nLCBcIkJ1aWxkXCIpXG5jaGVja19lbmRzd2l0aCBpZiBlbmRzd2l0aChleGFtcGxlX3N0cmluZywgXCIhXCIpXG5jaGVja19yZXBsYWNlIDo9IHJlcGxhY2UoZXhhbXBsZV9zdHJpbmcsIFwiT1BBXCIsIFwiT1BBIVwiKVxuY2hlY2tfc3ByaW50ZiA6PSBzcHJpbnRmKFwiT1BBIGlzICVzIVwiLCBbXCJhd2Vzb21lXCJdKVxuIn0%3D))
 
 
 
 
-```rego
+```rego title="policy.rego"
 example_string := "Build Policy as Code with OPA!"
 
 check_contains if contains(example_string, "OPA")
 check_startswith if startswith(example_string, "Build")
 check_endswith if endswith(example_string, "!")
-check_replace := replace(example_string, "OPA", "Styra")
+check_replace := replace(example_string, "OPA", "OPA!")
 check_sprintf := sprintf("OPA is %s!", ["awesome"])
 ```
 
@@ -427,7 +453,8 @@ check_sprintf := sprintf("OPA is %s!", ["awesome"])
 <RunSnippet command="data.cheat" depends="preamble.rego"/>
 
 
-### Aggregates 
+
+### Aggregates
 
 
 Summarize data. ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie30iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG52YWxzIDo9IFs1LCAxLCA0LCAyLCAzXVxudmFsc19jb3VudCA6PSBjb3VudCh2YWxzKVxudmFsc19tYXggOj0gbWF4KHZhbHMpXG52YWxzX21pbiA6PSBtaW4odmFscylcbnZhbHNfc29ydGVkIDo9IHNvcnQodmFscylcbnZhbHNfc3VtIDo9IHN1bSh2YWxzKVxuIn0%3D))
@@ -435,7 +462,7 @@ Summarize data. ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie30iLC
 
 
 
-```rego
+```rego title="policy.rego"
 vals := [5, 1, 4, 2, 3]
 vals_count := count(vals)
 vals_max := max(vals)
@@ -448,7 +475,8 @@ vals_sum := sum(vals)
 <RunSnippet command="data.cheat" depends="preamble.rego"/>
 
 
-### Objects: Extracting Data 
+
+### Objects: Extracting Data
 
 
 Work with key value and nested data. ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie30iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG5vYmogOj0ge1widXNlcmlkXCI6IFwiMTg0NzJcIiwgXCJyb2xlc1wiOiBbe1wibmFtZVwiOiBcImFkbWluXCJ9XX1cblxuIyBwYXRocyBjYW4gY29udGFpbiBhcnJheSBpbmRleGVzIHRvb1xudmFsIDo9IG9iamVjdC5nZXQob2JqLCBbXCJyb2xlc1wiLCAwLCBcIm5hbWVcIl0sIFwibWlzc2luZ1wiKVxuXG5kZWZhdWx0ZWRfdmFsIDo9IG9iamVjdC5nZXQoXG5cdG9iaixcblx0W1wicm9sZXNcIiwgMCwgXCJwZXJtaXNzaW9uc1wiXSwgIyBwYXRoXG5cdFwidW5rbm93blwiLCAjIGRlZmF1bHQgaWYgcGF0aCBpcyBtaXNzaW5nXG4pXG5cbmtleXMgOj0gb2JqZWN0LmtleXMob2JqKVxuIn0%3D))
@@ -456,7 +484,7 @@ Work with key value and nested data. ([Try It](https://play.openpolicyagent.org/
 
 
 
-```rego
+```rego title="policy.rego"
 obj := {"userid": "18472", "roles": [{"name": "admin"}]}
 
 # paths can contain array indexes too
@@ -475,7 +503,8 @@ keys := object.keys(obj)
 <RunSnippet command="data.cheat" depends="preamble.rego"/>
 
 
-### Objects: Transforming Data 
+
+### Objects: Transforming Data
 
 
 Manipulate and make checks on objects. ([Try It](https://play.openpolicyagent.org/?state=eyJpIjoie30iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG51bmlvbmVkIDo9IG9iamVjdC51bmlvbih7XCJmb29cIjogdHJ1ZX0sIHtcImJhclwiOiBmYWxzZX0pXG5cbnN1YnNldCA6PSBvYmplY3Quc3Vic2V0KFxuXHR7XCJmb29cIjogdHJ1ZSwgXCJiYXJcIjogZmFsc2V9LFxuXHR7XCJmb29cIjogdHJ1ZX0sICMgc3Vic2V0IG9iamVjdFxuKVxuXG5yZW1vdmVkIDo9IG9iamVjdC5yZW1vdmUoXG5cdHtcImZvb1wiOiB0cnVlLCBcImJhclwiOiBmYWxzZX0sXG5cdHtcImJhclwifSwgIyByZW1vdmUga2V5c1xuKVxuIn0%3D))
@@ -483,7 +512,7 @@ Manipulate and make checks on objects. ([Try It](https://play.openpolicyagent.or
 
 
 
-```rego
+```rego title="policy.rego"
 unioned := object.union({"foo": true}, {"bar": false})
 
 subset := object.subset(
@@ -503,9 +532,4 @@ removed := object.remove(
 
 
 
----
 
-The Rego Cheat Sheet is maintained by [Styra](http://styra.com), the
-creators of OPA, and the Styra community. If you have any questions,
-suggestions, or would like to get involved, please join us on our
-[Slack](https://inviter.co/styra).

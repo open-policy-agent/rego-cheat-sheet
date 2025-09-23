@@ -1,6 +1,15 @@
+---
+sidebar_label: "Cheat Sheet"
+---
+
 # Rego Cheat Sheet
 
-<!-- The source of truth for this file's contents is https://github.com/StyraInc/rego-cheat-sheet -->
+<!-- The source of truth for this file's contents is https://github.com/open-policy-agent/rego-cheat-sheet -->
+
+:::tip
+**Did you know?** There's a [printable PDF](/cheatsheet.pdf) version of the
+cheatsheet too!
+:::
 
 All code examples on this page share this preamble:
 
@@ -8,13 +17,16 @@ All code examples on this page share this preamble:
 package cheat
 import rego.v1
 ```
+
 <RunSnippet id="preamble.rego"/>
 
 {{ range .Sections }}
+
 ## {{ .Title }} - <sub><sup>{{ .Subtitle }}</sup></sub>
 
 {{ range .Cheats }}
-### {{ .Title }} 
+
+### {{ .Title }}
 
 {{ if ne .Text "" }}
 {{ .Text }} ([Try It]({{ .PlaygroundLink }}))
@@ -26,10 +38,11 @@ import rego.v1
 ```json title="input.json"
 {{ .Input | trim }}
 ```
+
 <RunSnippet id="input.{{.Title | urlquery}}.json"/>
 {{ end }}
 
-```rego
+```rego title="policy.rego"
 {{ .CodeDisplay }}
 ```
 

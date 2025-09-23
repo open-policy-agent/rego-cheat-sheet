@@ -76,12 +76,15 @@ contains, default, startswith, endswith, replace, sprintf, regex, replace, objec
 
 \maketitle
 
-{{ range .Sections }}
 \vspace{-1em}
+
+{{ range .Sections }}
 \section*{{ "{" }}{{ .Title }} \raisebox{.2ex}{{ "{" }}\footnotesize{{ "{" }} \normalfont \vspace*{-10pt} {{ .Subtitle }} {{ "}" }} {{ "}" }} {{ "}" }}
+\vspace{0.7em}
 
 {{ range .Cheats }}
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{{ "{" }}{{ .Title }}{{ "}" }}
 \vspace{-0.5em}
 
@@ -102,8 +105,10 @@ contains, default, startswith, endswith, replace, sprintf, regex, replace, objec
 \end{lstlisting}
 
 {{ if and (ne .Output "") (not .TexHideOutput) }}
-\vspace{-1em}
-\begin{lstlisting}[language=Ruby,caption=Output]
+\vspace{-0.4em}
+\scriptsize{Output}
+\vspace{-0.4em}
+\begin{lstlisting}[language=Ruby]
 {{ .Output }}
 \end{lstlisting}
 {{ end }}
@@ -113,7 +118,5 @@ contains, default, startswith, endswith, replace, sprintf, regex, replace, objec
 
 {{ end }}
 {{ end }}
-
-\scriptsize{{ "{" }}{{ .Footer }}{{ "}" }}
 
 \end{document}
