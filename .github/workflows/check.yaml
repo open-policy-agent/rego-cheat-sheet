@@ -12,8 +12,8 @@ jobs:
   check-cheats:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: StyraInc/setup-regal@main
-        with:
-          version: latest
-      - run: regal lint --format github cheats
+    - uses: actions/checkout@v4
+    - uses: open-policy-agent/setup-regal@main
+      with:
+        version: latest
+    - run: regal lint --format github cheats

@@ -2,6 +2,6 @@
   "check_contains": true,
   "check_startswith": true,
   "check_endswith": true,
-  "check_replace": "Build Policy as Code with Styra!",
+  "check_replace": "Build Policy as Code with OPA!",
   "check_sprintf": "OPA is awesome!"
 }

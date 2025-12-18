@@ -76,12 +76,15 @@ contains, default, startswith, endswith, replace, sprintf, regex, replace, objec
 
 \maketitle
 
-
 \vspace{-1em}
+
+
 \section*{Rules \raisebox{.2ex}{\footnotesize{ \normalfont \vspace*{-10pt} The building blocks of Rego } } }
+\vspace{0.7em}
 
 
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{Single-Value Rules}
 \vspace{-0.5em}
 
@@ -90,7 +93,7 @@ contains, default, startswith, endswith, replace, sprintf, regex, replace, objec
 In older documentation, these are sometimes referred to as "complete rules".
 }
 \newcommand{\cheatLink}{
-	https://play.openpolicyagent.org/?state=eyJpIjoie1xuICBcInVzZXJcIjoge1xuICAgIFwicm9sZVwiOiBcImFkbWluXCIsXG4gICAgXCJpbnRlcm5hbFwiOiB0cnVlXG4gIH1cbn0iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5kZWZhdWx0IGFsbG93IDo9IGZhbHNlXG5cbmFsbG93IGlmIHtcblx0aW5wdXQudXNlci5yb2xlID09IFwiYWRtaW5cIlxuXHRpbnB1dC51c2VyLmludGVybmFsXG59XG5cbmRlZmF1bHQgcmVxdWVzdF9xdW90YSA6PSAxMDBcblxucmVxdWVzdF9xdW90YSA6PSAxMDAwIGlmIGlucHV0LnVzZXIuaW50ZXJuYWxcblxucmVxdWVzdF9xdW90YSA6PSA1MCBpZiBpbnB1dC51c2VyLnBsYW4udHJpYWxcbiJ9
+	https://play.openpolicyagent.org/?state=eyJpIjoie1xuICBcInVzZXJcIjoge1xuICAgIFwicm9sZVwiOiBcImFkbWluXCIsXG4gICAgXCJpbnRlcm5hbFwiOiB0cnVlXG4gIH1cbn0iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5kZWZhdWx0IGFsbG93IDo9IGZhbHNlXG5cbmFsbG93IGlmIHtcblx0aW5wdXQudXNlci5yb2xlID09IFwiYWRtaW5cIlxuXHRpbnB1dC51c2VyLmludGVybmFsXG59XG5cbmRlZmF1bHQgcmVxdWVzdF9xdW90YSA6PSAxMDBcbnJlcXVlc3RfcXVvdGEgOj0gMTAwMCBpZiBpbnB1dC51c2VyLmludGVybmFsXG5yZXF1ZXN0X3F1b3RhIDo9IDUwIGlmIGlucHV0LnVzZXIucGxhbi50cmlhbFxuIn0%3D
 }
 
 \footnotesize{\tryitlink{\cheatText}{\cheatLink}}
@@ -107,9 +110,7 @@ allow if {
 }
 
 default request_quota := 100
-
 request_quota := 1000 if input.user.internal
-
 request_quota := 50 if input.user.plan.trial
 \end{lstlisting}
 
@@ -120,6 +121,7 @@ request_quota := 50 if input.user.plan.trial
 
 
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{Multi-Value Set Rules}
 \vspace{-0.5em}
 
@@ -146,8 +148,10 @@ paths contains path if {
 \end{lstlisting}
 
 
-\vspace{-1em}
-\begin{lstlisting}[language=Ruby,caption=Output]
+\vspace{-0.4em}
+\scriptsize{Output}
+\vspace{-0.4em}
+\begin{lstlisting}[language=Ruby]
 {
   "paths": ["/handbook/*", "/teams/owl/*", "/teams/tiger/*"]
 }
@@ -159,6 +163,7 @@ paths contains path if {
 
 
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{Multi-Value Object Rules}
 \vspace{-0.5em}
 
@@ -186,8 +191,10 @@ paths_by_prefix[prefix] contains path if {
 \end{lstlisting}
 
 
-\vspace{-1em}
-\begin{lstlisting}[language=Ruby,caption=Output]
+\vspace{-0.4em}
+\scriptsize{Output}
+\vspace{-0.4em}
+\begin{lstlisting}[language=Ruby]
 {
   "paths_by_prefix": {
     "a": ["a/123.txt", "a/456.txt"],
@@ -203,11 +210,12 @@ paths_by_prefix[prefix] contains path if {
 
 
 
-\vspace{-1em}
 \section*{Iteration \raisebox{.2ex}{\footnotesize{ \normalfont \vspace*{-10pt} Make quick work of collections } } }
+\vspace{0.7em}
 
 
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{Some}
 \vspace{-0.5em}
 
@@ -240,8 +248,10 @@ allowed_regions contains region_id if {
 \end{lstlisting}
 
 
-\vspace{-1em}
-\begin{lstlisting}[language=Ruby,caption=Output]
+\vspace{-0.4em}
+\scriptsize{Output}
+\vspace{-0.4em}
+\begin{lstlisting}[language=Ruby]
 {
   "allowed_regions": [
     "apac_north", "apac_south", "emea_east", ...
@@ -255,6 +265,7 @@ allowed_regions contains region_id if {
 
 
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{Every}
 \vspace{-0.5em}
 
@@ -286,11 +297,12 @@ allow if {
 
 
 
-\vspace{-1em}
 \section*{Control Flow \raisebox{.2ex}{\footnotesize{ \normalfont \vspace*{-10pt} Handle different conditions } } }
+\vspace{0.7em}
 
 
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{Logical AND}
 \vspace{-0.5em}
 
@@ -298,7 +310,7 @@ allow if {
 	Statements in rules are joined with logical AND.
 }
 \newcommand{\cheatLink}{
-	https://play.openpolicyagent.org/?state=eyJpIjoie1xuICBcImVtYWlsXCI6IFwiam9lQGV4YW1wbGUuY29tXCJcbn0iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG52YWxpZF9zdGFmZl9lbWFpbCBpZiB7XG5cdHJlZ2V4Lm1hdGNoKGBeXFxTK0BcXFMrXFwuXFxTKyRgLCBpbnB1dC5lbWFpbClcblxuXHQjIGFuZFxuXHRlbmRzd2l0aChpbnB1dC5lbWFpbCwgXCJleGFtcGxlLmNvbVwiKVxufVxuIn0%3D
+	https://play.openpolicyagent.org/?state=eyJpIjoie1xuICBcImVtYWlsXCI6IFwiam9lQGV4YW1wbGUuY29tXCJcbn0iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG52YWxpZF9zdGFmZl9lbWFpbCBpZiB7XG5cdHJlZ2V4Lm1hdGNoKGBeXFxTK0BcXFMrXFwuXFxTKyRgLCBpbnB1dC5lbWFpbCkgIyBhbmRcblx0ZW5kc3dpdGgoaW5wdXQuZW1haWwsIFwiZXhhbXBsZS5jb21cIilcbn1cbiJ9
 }
 
 \footnotesize{\tryitlink{\cheatText}{\cheatLink}}
@@ -308,9 +320,7 @@ allow if {
 
 \begin{lstlisting}[language=Ruby]
 valid_staff_email if {
-	regex.match(`^\S+@\S+\.\S+$`, input.email)
-
-	# and
+	regex.match(`^\S+@\S+\.\S+$`, input.email) # and
 	endswith(input.email, "example.com")
 }
 \end{lstlisting}
@@ -322,6 +332,7 @@ valid_staff_email if {
 
 
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{Logical OR}
 \vspace{-0.5em}
 
@@ -329,7 +340,7 @@ valid_staff_email if {
 	Express OR with multiple rules, functions or the in keyword.
 }
 \newcommand{\cheatLink}{
-	https://play.openpolicyagent.org/?state=eyJpIjoie1xuICBcImVtYWlsXCI6IFwib3BhQGV4YW1wbGUuY29tXCIsXG4gIFwibmFtZVwiOiBcImFubmFcIixcbiAgXCJtZXRob2RcIjogXCJHRVRcIlxufSIsInAiOiJwYWNrYWdlIGNoZWF0XG5cbmltcG9ydCByZWdvLnYxXG5cbiMgdXNpbmcgbXVsdGlwbGUgcnVsZXNcbnZhbGlkX2VtYWlsIGlmIGVuZHN3aXRoKGlucHV0LmVtYWlsLCBcIkBleGFtcGxlLmNvbVwiKVxuXG52YWxpZF9lbWFpbCBpZiBlbmRzd2l0aChpbnB1dC5lbWFpbCwgXCJAZXhhbXBsZS5vcmdcIilcblxudmFsaWRfZW1haWwgaWYgZW5kc3dpdGgoaW5wdXQuZW1haWwsIFwiQGV4YW1wbGUubmV0XCIpXG5cbiMgdXNpbmcgZnVuY3Rpb25zXG5hbGxvd2VkX2ZpcnN0bmFtZShuYW1lKSBpZiB7XG5cdHN0YXJ0c3dpdGgobmFtZSwgXCJhXCIpXG5cdGNvdW50KG5hbWUpIFx1MDAzZSAyXG59XG5cbmFsbG93ZWRfZmlyc3RuYW1lKFwiam9lXCIpICMgaWYgbmFtZSA9PSAnam9lJ1xuXG52YWxpZF9uYW1lIGlmIHtcblx0YWxsb3dlZF9maXJzdG5hbWUoaW5wdXQubmFtZSlcbn1cblxuIyB1c2luZyBgaW5gXG52YWxpZF9yZXF1ZXN0IGlmIHtcblx0aW5wdXQubWV0aG9kIGluIHtcIkdFVFwiLCBcIlBPU1RcIn1cbn1cbiJ9
+	https://play.openpolicyagent.org/?state=eyJpIjoie1xuICBcImVtYWlsXCI6IFwib3BhQGV4YW1wbGUuY29tXCIsXG4gIFwibmFtZVwiOiBcImFubmFcIixcbiAgXCJtZXRob2RcIjogXCJHRVRcIlxufSIsInAiOiJwYWNrYWdlIGNoZWF0XG5cbmltcG9ydCByZWdvLnYxXG5cbiMgdXNpbmcgbXVsdGlwbGUgcnVsZXNcbnZhbGlkX2VtYWlsIGlmIGVuZHN3aXRoKGlucHV0LmVtYWlsLCBcIkBleGFtcGxlLmNvbVwiKVxudmFsaWRfZW1haWwgaWYgZW5kc3dpdGgoaW5wdXQuZW1haWwsIFwiQGV4YW1wbGUub3JnXCIpXG52YWxpZF9lbWFpbCBpZiBlbmRzd2l0aChpbnB1dC5lbWFpbCwgXCJAZXhhbXBsZS5uZXRcIilcblxuIyB1c2luZyBmdW5jdGlvbnNcbmFsbG93ZWRfZmlyc3RuYW1lKG5hbWUpIGlmIHtcblx0c3RhcnRzd2l0aChuYW1lLCBcImFcIilcblx0Y291bnQobmFtZSkgXHUwMDNlIDJcbn1cblxuYWxsb3dlZF9maXJzdG5hbWUoXCJqb2VcIikgIyBpZiBuYW1lID09ICdqb2UnXG5cbnZhbGlkX25hbWUgaWYgYWxsb3dlZF9maXJzdG5hbWUoaW5wdXQubmFtZSlcblxudmFsaWRfcmVxdWVzdCBpZiB7XG5cdGlucHV0Lm1ldGhvZCBpbiB7XCJHRVRcIiwgXCJQT1NUXCJ9ICMgdXNpbmcgYGluYFxufVxuIn0%3D
 }
 
 \footnotesize{\tryitlink{\cheatText}{\cheatLink}}
@@ -340,9 +351,7 @@ valid_staff_email if {
 \begin{lstlisting}[language=Ruby]
 # using multiple rules
 valid_email if endswith(input.email, "@example.com")
-
 valid_email if endswith(input.email, "@example.org")
-
 valid_email if endswith(input.email, "@example.net")
 
 # using functions
@@ -353,21 +362,22 @@ allowed_firstname(name) if {
 
 allowed_firstname("joe") # if name == 'joe'
 
-valid_name if {
-	allowed_firstname(input.name)
-}
+valid_name if allowed_firstname(input.name)
 
-# using `in`
 valid_request if {
-	input.method in {"GET", "POST"}
+	input.method in {"GET", "POST"} # using `in`
 }
 \end{lstlisting}
 
 
-\vspace{-1em}
-\begin{lstlisting}[language=Ruby,caption=Output]
+\vspace{-0.4em}
+\scriptsize{Output}
+\vspace{-0.4em}
+\begin{lstlisting}[language=Ruby]
 {
-  "email": "opa@example.com", "name": "anna", "method": "GET"
+  "email": "opa@example.com",
+  "name": "anna",
+  "method": "GET"
 }
 \end{lstlisting}
 
@@ -377,11 +387,12 @@ valid_request if {
 
 
 
-\vspace{-1em}
 \section*{Testing \raisebox{.2ex}{\footnotesize{ \normalfont \vspace*{-10pt} Validate your policy's behavior } } }
+\vspace{0.7em}
 
 
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{With}
 \vspace{-0.5em}
 
@@ -412,11 +423,12 @@ test_allow_when_admin if {
 
 
 
-\vspace{-1em}
 \section*{Debugging \raisebox{.2ex}{\footnotesize{ \normalfont \vspace*{-10pt} Find and fix problems } } }
+\vspace{0.7em}
 
 
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{Print}
 \vspace{-0.5em}
 
@@ -424,7 +436,7 @@ test_allow_when_admin if {
 	Use print in rules to inspect values at runtime.
 }
 \newcommand{\cheatLink}{
-	https://play.openpolicyagent.org/?state=eyJpIjoie30iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG5hbGxvd2VkX3VzZXJzIDo9IHtcImFsaWNlXCIsIFwiYm9iXCIsIFwiY2hhcmxpZVwifVxuXG5hbGxvdyBpZiB7XG5cdHNvbWUgdXNlciBpbiBhbGxvd2VkX3VzZXJzXG5cdHByaW50KHVzZXIpXG5cdGlucHV0LnVzZXIgPT0gdXNlclxufVxuIn0%3D
+	https://play.openpolicyagent.org/?state=eyJpIjoie30iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG5hbGxvd2VkX3VzZXJzIDo9IHtcImFsaWNlXCIsIFwiYm9iXCJ9XG5cbmFsbG93IGlmIHtcblx0c29tZSB1c2VyIGluIGFsbG93ZWRfdXNlcnNcblx0cHJpbnQodXNlcilcblx0aW5wdXQudXNlciA9PSB1c2VyXG59XG4ifQ%3D%3D
 }
 
 \footnotesize{\tryitlink{\cheatText}{\cheatLink}}
@@ -433,7 +445,7 @@ test_allow_when_admin if {
 \let\cheatText\undefined
 
 \begin{lstlisting}[language=Ruby]
-allowed_users := {"alice", "bob", "charlie"}
+allowed_users := {"alice", "bob"}
 
 allow if {
 	some user in allowed_users
@@ -443,11 +455,12 @@ allow if {
 \end{lstlisting}
 
 
-\vspace{-1em}
-\begin{lstlisting}[language=Ruby,caption=Output]
+\vspace{-0.4em}
+\scriptsize{Output}
+\vspace{-0.4em}
+\begin{lstlisting}[language=Ruby]
 // alice
 // bob
-// charlie
 \end{lstlisting}
 
 }
@@ -456,11 +469,12 @@ allow if {
 
 
 
-\vspace{-1em}
 \section*{Comprehensions \raisebox{.2ex}{\footnotesize{ \normalfont \vspace*{-10pt} Rework and process collections } } }
+\vspace{0.7em}
 
 
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{Arrays}
 \vspace{-0.5em}
 
@@ -485,11 +499,11 @@ doubled := [m |
 \end{lstlisting}
 
 
-\vspace{-1em}
-\begin{lstlisting}[language=Ruby,caption=Output]
-{
-  "doubled": [2, 4, 6, 6]
-}
+\vspace{-0.4em}
+\scriptsize{Output}
+\vspace{-0.4em}
+\begin{lstlisting}[language=Ruby]
+{ "doubled": [2, 4, 6, 6] }
 \end{lstlisting}
 
 }
@@ -498,6 +512,7 @@ doubled := [m |
 
 
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{Sets}
 \vspace{-0.5em}
 
@@ -522,11 +537,11 @@ unique_doubled contains m if {
 \end{lstlisting}
 
 
-\vspace{-1em}
-\begin{lstlisting}[language=Ruby,caption=Output]
-{
-  "unique_doubled": [20, 40, 60]
-}
+\vspace{-0.4em}
+\scriptsize{Output}
+\vspace{-0.4em}
+\begin{lstlisting}[language=Ruby]
+{ "unique_doubled": [20, 40, 60] }
 \end{lstlisting}
 
 }
@@ -535,6 +550,7 @@ unique_doubled contains m if {
 
 
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{Objects}
 \vspace{-0.5em}
 
@@ -559,8 +575,10 @@ is_even[number] := is_even if {
 \end{lstlisting}
 
 
-\vspace{-1em}
-\begin{lstlisting}[language=Ruby,caption=Output]
+\vspace{-0.4em}
+\scriptsize{Output}
+\vspace{-0.4em}
+\begin{lstlisting}[language=Ruby]
 {
   "is_even": {
     "1": false, "2": true, "3": false, "4": true
@@ -574,11 +592,12 @@ is_even[number] := is_even if {
 
 
 
-\vspace{-1em}
 \section*{Builtins \raisebox{.2ex}{\footnotesize{ \normalfont \vspace*{-10pt} Handy functions for common tasks } } }
+\vspace{0.7em}
 
 
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{Regex}
 \vspace{-0.5em}
 
@@ -603,8 +622,10 @@ check_replace := regex.replace(example_string, `\s+`, "_")
 \end{lstlisting}
 
 
-\vspace{-1em}
-\begin{lstlisting}[language=Ruby,caption=Output]
+\vspace{-0.4em}
+\scriptsize{Output}
+\vspace{-0.4em}
+\begin{lstlisting}[language=Ruby]
 {
   "check_match": true,
   "check_replace": "Build_Policy_as_Code_with_OPA!"
@@ -617,6 +638,7 @@ check_replace := regex.replace(example_string, `\s+`, "_")
 
 
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{Strings}
 \vspace{-0.5em}
 
@@ -624,7 +646,7 @@ check_replace := regex.replace(example_string, `\s+`, "_")
 	Check and transform strings.
 }
 \newcommand{\cheatLink}{
-	https://play.openpolicyagent.org/?state=eyJpIjoie30iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG5leGFtcGxlX3N0cmluZyA6PSBcIkJ1aWxkIFBvbGljeSBhcyBDb2RlIHdpdGggT1BBIVwiXG5cbmNoZWNrX2NvbnRhaW5zIGlmIGNvbnRhaW5zKGV4YW1wbGVfc3RyaW5nLCBcIk9QQVwiKVxuY2hlY2tfc3RhcnRzd2l0aCBpZiBzdGFydHN3aXRoKGV4YW1wbGVfc3RyaW5nLCBcIkJ1aWxkXCIpXG5jaGVja19lbmRzd2l0aCBpZiBlbmRzd2l0aChleGFtcGxlX3N0cmluZywgXCIhXCIpXG5jaGVja19yZXBsYWNlIDo9IHJlcGxhY2UoZXhhbXBsZV9zdHJpbmcsIFwiT1BBXCIsIFwiU3R5cmFcIilcbmNoZWNrX3NwcmludGYgOj0gc3ByaW50ZihcIk9QQSBpcyAlcyFcIiwgW1wiYXdlc29tZVwiXSlcbiJ9
+	https://play.openpolicyagent.org/?state=eyJpIjoie30iLCJwIjoicGFja2FnZSBjaGVhdFxuXG5pbXBvcnQgcmVnby52MVxuXG5leGFtcGxlX3N0cmluZyA6PSBcIkJ1aWxkIFBvbGljeSBhcyBDb2RlIHdpdGggT1BBIVwiXG5cbmNoZWNrX2NvbnRhaW5zIGlmIGNvbnRhaW5zKGV4YW1wbGVfc3RyaW5nLCBcIk9QQVwiKVxuY2hlY2tfc3RhcnRzd2l0aCBpZiBzdGFydHN3aXRoKGV4YW1wbGVfc3RyaW5nLCBcIkJ1aWxkXCIpXG5jaGVja19lbmRzd2l0aCBpZiBlbmRzd2l0aChleGFtcGxlX3N0cmluZywgXCIhXCIpXG5jaGVja19yZXBsYWNlIDo9IHJlcGxhY2UoZXhhbXBsZV9zdHJpbmcsIFwiT1BBXCIsIFwiT1BBIVwiKVxuY2hlY2tfc3ByaW50ZiA6PSBzcHJpbnRmKFwiT1BBIGlzICVzIVwiLCBbXCJhd2Vzb21lXCJdKVxuIn0%3D
 }
 
 \footnotesize{\tryitlink{\cheatText}{\cheatLink}}
@@ -638,7 +660,7 @@ example_string := "Build Policy as Code with OPA!"
 check_contains if contains(example_string, "OPA")
 check_startswith if startswith(example_string, "Build")
 check_endswith if endswith(example_string, "!")
-check_replace := replace(example_string, "OPA", "Styra")
+check_replace := replace(example_string, "OPA", "OPA!")
 check_sprintf := sprintf("OPA is %s!", ["awesome"])
 \end{lstlisting}
 
@@ -649,6 +671,7 @@ check_sprintf := sprintf("OPA is %s!", ["awesome"])
 
 
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{Aggregates}
 \vspace{-0.5em}
 
@@ -674,8 +697,10 @@ vals_sum := sum(vals)
 \end{lstlisting}
 
 
-\vspace{-1em}
-\begin{lstlisting}[language=Ruby,caption=Output]
+\vspace{-0.4em}
+\scriptsize{Output}
+\vspace{-0.4em}
+\begin{lstlisting}[language=Ruby]
 {
   "vals_count": 5,
   "vals_max": 5,
@@ -691,6 +716,7 @@ vals_sum := sum(vals)
 
 
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{Objects: Extracting Data}
 \vspace{-0.5em}
 
@@ -722,8 +748,10 @@ keys := object.keys(obj)
 \end{lstlisting}
 
 
-\vspace{-1em}
-\begin{lstlisting}[language=Ruby,caption=Output]
+\vspace{-0.4em}
+\scriptsize{Output}
+\vspace{-0.4em}
+\begin{lstlisting}[language=Ruby]
 {
   "val": "admin",
   "defaulted_val": "unknown",
@@ -738,6 +766,7 @@ keys := object.keys(obj)
 
 
 \vbox{%
+\vspace{-1.5em}
 \subsubsection*{Objects: Transforming Data}
 \vspace{-0.5em}
 
@@ -768,8 +797,10 @@ removed := object.remove(
 \end{lstlisting}
 
 
-\vspace{-1em}
-\begin{lstlisting}[language=Ruby,caption=Output]
+\vspace{-0.4em}
+\scriptsize{Output}
+\vspace{-0.4em}
+\begin{lstlisting}[language=Ruby]
 {
   "removed": { "foo": true },
   "subset": true,
@@ -783,13 +814,5 @@ removed := object.remove(
 
 
 
-
-\scriptsize{\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-The Rego Cheat Sheet is maintained by \href{http://styra.com}{Styra},
-the creators of OPA, and the Styra community.
-If you have any questions, suggestions, or would like to
-get involved, please join us on our
-\href{https://inviter.co/styra}{Slack}.}
 
 \end{document}

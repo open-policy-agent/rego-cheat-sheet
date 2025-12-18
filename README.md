@@ -6,8 +6,8 @@
 # Rego Cheat Sheet
 
 This project contains the code to generate the
-[Rego Cheat Sheet](https://docs.styra.com/opa/rego-cheat-sheet),
-in both Markdown and [PDF](https://docs.styra.com/rego-cheat-sheet.pdf)
+[Rego Cheat Sheet](https://www.openpolicyagent.org/docs/cheatsheet),
+in both Markdown and [PDF](https://www.openpolicyagent.org/cheatsheet.pdf)
 formats.
 
 The cheat sheet is designed to be a quick reference for those,
