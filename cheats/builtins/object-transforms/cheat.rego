@@ -1,7 +1,5 @@
 package cheat
 
-import rego.v1
-
 unioned := object.union({"foo": true}, {"bar": false})
 
 subset := object.subset(

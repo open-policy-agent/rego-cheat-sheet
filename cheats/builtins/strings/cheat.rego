@@ -1,7 +1,5 @@
 package cheat
 
-import rego.v1
-
 example_string := "Build Policy as Code with OPA!"
 
 check_contains if contains(example_string, "OPA")
