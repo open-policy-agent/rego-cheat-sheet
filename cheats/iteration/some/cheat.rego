@@ -1,7 +1,5 @@
 package cheat
 
-import rego.v1
-
 all_regions := {
 	"emea": {"west", "east"},
 	"na": {"west", "east", "central"},

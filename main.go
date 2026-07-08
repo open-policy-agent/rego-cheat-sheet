@@ -35,7 +35,6 @@ type Cheat struct {
 func (c *Cheat) CodeDisplay() string {
 	code := c.Code
 	code = strings.Replace(code, "package cheat", "", 1)
-	code = strings.Replace(code, "import rego.v1", "", 1)
 	code = strings.TrimSpace(code)
 
 	return code

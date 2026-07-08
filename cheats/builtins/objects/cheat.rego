@@ -1,7 +1,5 @@
 package cheat
 
-import rego.v1
-
 obj := {"userid": "18472", "roles": [{"name": "admin"}]}
 
 # paths can contain array indexes too

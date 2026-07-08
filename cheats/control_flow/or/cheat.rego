@@ -1,7 +1,5 @@
 package cheat
 
-import rego.v1
-
 # using multiple rules
 valid_email if endswith(input.email, "@example.com")
 valid_email if endswith(input.email, "@example.org")

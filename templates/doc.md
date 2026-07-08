@@ -15,7 +15,6 @@ All code examples on this page share this preamble:
 
 ```rego
 package cheat
-import rego.v1
 ```
 
 <RunSnippet id="preamble.rego"/>

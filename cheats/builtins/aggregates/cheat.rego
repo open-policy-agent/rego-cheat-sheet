@@ -1,7 +1,5 @@
 package cheat
 
-import rego.v1
-
 vals := [5, 1, 4, 2, 3]
 vals_count := count(vals)
 vals_max := max(vals)
